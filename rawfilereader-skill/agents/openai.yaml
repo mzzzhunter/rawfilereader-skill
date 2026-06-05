@@ -1,0 +1,4 @@
+interface:
+  display_name: "RawFileReader"
+  short_description: "Read Thermo RAW files from Python"
+  default_prompt: "Use the RawFileReader skill to stage the bundled Python adapter and DLL assets, then read a Thermo .raw file with RawFileAdapter."
