@@ -32,6 +32,11 @@ _REQUIRED_DLLS = [
 _loaded = False  # module-level flag to avoid loading twice
 
 
+def _runtime_config_path() -> Path:
+    """Return the bundled configuration that selects a .NET 8+ CoreCLR."""
+    return Path(__file__).with_name("rawfilereader.runtimeconfig.json")
+
+
 def _find_libs_dir() -> Optional[Path]:
     """Return the best candidate directory containing RawFileReader DLLs."""
     # 1. Environment variable
@@ -75,21 +80,48 @@ def load_assemblies(libs_dir: Optional[str] = None) -> None:
     if _loaded:
         return
 
-    # pythonnet 3.x needs the runtime selected before `import clr`.
-    # The DLLs are built for .NET Core / .NET 5+, so request "coreclr".
-    # This is a no-op if the runtime was already initialised.
+    # Python.NET defaults to .NET Framework on Windows unless CoreCLR is
+    # selected before `import clr`. These assemblies target .NET 8, so use the
+    # bundled runtime configuration rather than relying on host defaults.
+    runtime_config = _runtime_config_path()
+    if not runtime_config.is_file():
+        raise AssemblyLoadError(
+            f"Missing .NET 8 runtime configuration: {runtime_config}"
+        )
+
     try:
         from pythonnet import load as _load_runtime
-        _load_runtime("coreclr")
-    except Exception:
-        pass  # pythonnet < 3.0, or runtime already set
+    except ImportError as exc:
+        raise AssemblyLoadError(
+            "pythonnet 3.0.3 or newer is required. Install it with: "
+            "pip install 'pythonnet>=3.0.3'"
+        ) from exc
+
+    try:
+        _load_runtime("coreclr", runtime_config=str(runtime_config))
+    except Exception as exc:
+        raise AssemblyLoadError(
+            "Failed to start the .NET 8 CoreCLR required by the bundled "
+            "RawFileReader assemblies. Install the .NET 8 runtime and ensure "
+            "that clr has not already been imported with another runtime."
+        ) from exc
 
     try:
         import clr  # noqa: F401 (pythonnet)
     except ImportError as exc:
         raise AssemblyLoadError(
-            "pythonnet is not installed.  Install it with:  pip install pythonnet"
+            "pythonnet could not import clr after loading the .NET 8 CoreCLR."
         ) from exc
+
+    from System import Environment
+
+    if Environment.Version.Major < 8:
+        raise AssemblyLoadError(
+            "The active CLR is "
+            f"{Environment.Version}, but the bundled RawFileReader assemblies "
+            "require .NET 8 or newer. Start a fresh Python process without "
+            "importing clr first."
+        )
 
     # Resolve the libs directory
     search_dir = Path(libs_dir) if libs_dir else _find_libs_dir()

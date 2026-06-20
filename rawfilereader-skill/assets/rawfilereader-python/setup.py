@@ -7,6 +7,7 @@ setup(
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     packages=find_packages(exclude=["tests*", "examples*"]),
+    package_data={"rawfilereader": ["*.runtimeconfig.json"]},
     python_requires=">=3.8",
     install_requires=[
         "pythonnet>=3.0.3",

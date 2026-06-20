@@ -38,6 +38,13 @@ def main() -> int:
 
     target_dir.mkdir(parents=True, exist_ok=True)
     copytree_replace(source_dir / "rawfilereader", target_dir / "rawfilereader")
+    runtime_config = (
+        target_dir / "rawfilereader" / "rawfilereader.runtimeconfig.json"
+    )
+    if not runtime_config.is_file():
+        raise FileNotFoundError(
+            f"Missing staged .NET 8 runtime configuration: {runtime_config}"
+        )
 
     for name in ("setup.py", "requirements.txt", "README.md"):
         src = source_dir / name
@@ -46,15 +53,21 @@ def main() -> int:
 
     print(f"staged_package={target_dir / 'rawfilereader'}")
     print(f"RAWFILEREADER_LIBS={libs_dir}")
+    print("PYTHONNET_RUNTIME=coreclr")
+    print(f"PYTHONNET_CORECLR_RUNTIME_CONFIG={runtime_config}")
     print(f"pythonpath_hint={target_dir}")
     print(
         "powershell_env="
         f"$env:RAWFILEREADER_LIBS='{libs_dir}'; "
+        "$env:PYTHONNET_RUNTIME='coreclr'; "
+        f"$env:PYTHONNET_CORECLR_RUNTIME_CONFIG='{runtime_config}'; "
         f"$env:PYTHONPATH='{target_dir}'"
     )
     print(
         "posix_env="
         f"export RAWFILEREADER_LIBS='{libs_dir}'; "
+        "export PYTHONNET_RUNTIME='coreclr'; "
+        f"export PYTHONNET_CORECLR_RUNTIME_CONFIG='{runtime_config}'; "
         f"export PYTHONPATH='{target_dir}${{PYTHONPATH:+:$PYTHONPATH}}'"
     )
     return 0

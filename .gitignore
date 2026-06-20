@@ -13,3 +13,4 @@ dist/
 *.egg-info/
 AGENTS.md
 /test
+*.raw
