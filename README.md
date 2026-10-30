@@ -6,6 +6,14 @@ GitHub skill URL:
 
 https://github.com/mzzzhunter/rawfilereader-skill/tree/master/rawfilereader-skill
 
+## Install With a Prompt
+
+Copy and paste this prompt into Codex or Claude Code:
+
+```text
+Install the rawfilereader-skill from https://github.com/mzzzhunter/rawfilereader-skill/tree/master/rawfilereader-skill as a personal skill. In Codex, use the skill installer. In Claude Code, copy the rawfilereader-skill directory, including all bundled assets, into ~/.claude/skills/rawfilereader-skill (on Windows, use %USERPROFILE%\.claude\skills\rawfilereader-skill). If the skill is already installed, ask before replacing it. Verify that SKILL.md and the bundled scripts and assets are present, then tell me whether I need to restart the app.
+```
+
 ## Install From Codex
 
 In Codex, run:
