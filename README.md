@@ -48,4 +48,30 @@ rm -rf .rawfilereader-skill-install
 
 Restart Claude Code after installing if the skill does not appear.
 
+## Example Usage
 
+After installing, paste one of these prompts into Codex or Claude Code. Replace the example paths with your own Thermo `.raw` file and output directory. Keep data files outside the skill folder.
+
+### Inspect a RAW file
+
+```text
+Use the rawfilereader-skill to inspect /path/to/sample.raw. Report the file metadata, scan range, and first five scan filters. Stage the bundled adapter in my working directory and check the Python and .NET requirements before reading the file.
+```
+
+### Export a total ion chromatogram
+
+```text
+Use the rawfilereader-skill to extract the total ion chromatogram (TIC) from /path/to/sample.raw. Save the retention times and intensities to /path/to/output/tic.csv with a header row, and report the retention-time units.
+```
+
+### Inspect a spectrum
+
+```text
+Use the rawfilereader-skill to read the first scan in /path/to/sample.raw. Show its scan metadata and the first ten centroid peaks as m/z and intensity pairs. If centroid data is unavailable, explain what is available.
+```
+
+### Draft an LC-MS methods summary
+
+```text
+Use the rawfilereader-skill and its examples/method-section-summary example to extract the instrument method metadata from /path/to/sample.raw and draft an LC-MS methods paragraph. Only include settings supported by the extracted metadata, and list any missing details I need to supply.
+```
