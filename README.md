@@ -1,6 +1,6 @@
 # RawFileReader Skill
 
-AI Agent skill for working with Thermo RawFileReader files.
+AI Agent skill for working with Thermo RAW files.
 
 GitHub skill URL:
 
