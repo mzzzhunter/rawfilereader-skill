@@ -76,6 +76,10 @@ Use the rawfilereader-skill to read the first scan in /path/to/sample.raw. Show 
 Use the rawfilereader-skill and its examples/method-section-summary example to extract the instrument method metadata from /path/to/sample.raw and draft an LC-MS methods paragraph. Only include settings supported by the extracted metadata, and list any missing details I need to supply.
 ```
 
+## License
+
+The original skill material in this repository is licensed under the [MIT License](LICENSE). Bundled components under `rawfilereader-skill/assets/` have separate or unverified terms and are not covered by that grant. The bundled Python adapter's package metadata identifies its license as "Other/Proprietary License"; its upstream license terms were not found. The terms for the bundled Thermo Fisher and OpenMcdf assemblies have not been verified. Consult the respective rights holders and applicable notices before using or redistributing those components.
+
 ## Citation
 
 Chen, T. (2026). *RawFileReader Skill for AI Agent* [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23932107
