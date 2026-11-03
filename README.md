@@ -1,6 +1,6 @@
 # RawFileReader Skill
 
-Codex/Claude skill for working with Thermo RawFileReader files.
+AI Agent skill for working with Thermo RawFileReader files.
 
 GitHub skill URL:
 
@@ -75,3 +75,7 @@ Use the rawfilereader-skill to read the first scan in /path/to/sample.raw. Show 
 ```text
 Use the rawfilereader-skill and its examples/method-section-summary example to extract the instrument method metadata from /path/to/sample.raw and draft an LC-MS methods paragraph. Only include settings supported by the extracted metadata, and list any missing details I need to supply.
 ```
+
+## Citation
+
+Chen, T. (2026). *RawFileReader Skill for AI Agent* [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23932107
